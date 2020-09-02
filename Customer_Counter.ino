@@ -1,3 +1,7 @@
+/*The project was created in light of the Coronavirus pandemic.
+I created a Arudino device that would be able to monitor and regulate the number of customer in indoor environments.
+When placed at an entrance it will count the number of people entering and will indicate through leds when maximum capacity is reached.
+*/
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 const int trigPin = 8;
@@ -15,7 +19,7 @@ void setup() {
 }
 
 void loop() {
- digitalWrite(trigPin, LOW);
+ digitalWrite(trigPin, LOW);          //initalizing ultrasonic signal
   delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
@@ -28,7 +32,7 @@ void loop() {
   Serial.println(distance);
   delay(500);
 
-  if (distance<2){
+  if (distance<2){                 //utilizing a counter to monitor the number of people entering
   customer= customer+1;
   lcd.clear();
   lcd.print("Customers: ");
@@ -36,11 +40,11 @@ void loop() {
   
   }
   if  (customer<=10){
-    digitalWrite(7, HIGH);
+    digitalWrite(7, HIGH);        //activating a green led when number of people are below max capacity
     digitalWrite(6, LOW);
   }
   if (customer>10){
-    digitalWrite(7, LOW);
+    digitalWrite(7, LOW);         //activating a red led when number of people are above max capacity
     digitalWrite(6, HIGH);
   }
   
